@@ -2,16 +2,9 @@ package routes
 
 import "github.com/gin-gonic/gin"
 
-const (
-	baseUrl  = "/api/v1"
-	user     = baseUrl + "/user"
-	userById = user + "/:id"
-)
+const baseUrl = "/api/v1"
 
 func InitRoutes(r *gin.RouterGroup) {
-	r.GET(userById, func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
+	InitAuthRoutes(baseUrl, r)
+	InitUserRoutes(baseUrl, r)
 }
