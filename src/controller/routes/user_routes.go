@@ -1,6 +1,9 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	uc "github.com/william-cesar/crud-in-go/src/controller/user"
+)
 
 func InitUserRoutes(url string, r *gin.RouterGroup) {
 	user := url + "/user"
@@ -11,4 +14,6 @@ func InitUserRoutes(url string, r *gin.RouterGroup) {
 			"message": "User found",
 		})
 	})
+
+	r.POST(user, uc.CreateUser)
 }
