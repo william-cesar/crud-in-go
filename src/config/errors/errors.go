@@ -1,8 +1,6 @@
 package errors
 
-import (
-	"net/http"
-)
+import "net/http"
 
 var errorTypes = map[string]string{
 	"badRequest":    "We could not process your request. Please verify your fields.",
