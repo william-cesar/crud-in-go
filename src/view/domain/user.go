@@ -1,5 +1,10 @@
 package domain
 
+import (
+	"crypto/sha256"
+	"encoding/hex"
+)
+
 type tUser struct {
 	id       string
 	name     string
@@ -33,26 +38,10 @@ func (u *tUser) IsActive() bool {
 	return u.active
 }
 
-func (u *tUser) SetId(id string) {
-	u.id = id
-}
+func (u *tUser) EncryptPassword() {
+	hash := sha256.New()
+	defer hash.Reset()
 
-func (u *tUser) SetName(name string) {
-	u.name = name
-}
-
-func (u *tUser) SetEmail(email string) {
-	u.email = email
-}
-
-func (u *tUser) SetPassword(password string) {
-	u.password = password
-}
-
-func (u *tUser) SetAge(age int8) {
-	u.age = age
-}
-
-func (u *tUser) SetActive(active bool) {
-	u.active = active
+	hash.Write([]byte(u.password))
+	u.password = hex.EncodeToString(hash.Sum(nil))
 }

@@ -5,11 +5,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/william-cesar/crud-in-go/src/config/validations"
-	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
+	"github.com/william-cesar/crud-in-go/src/view/domain"
 )
 
-func CreateUser(c *gin.Context) {
+func (uc *tUserController) CreateUser(c *gin.Context) {
 	var userRequest adapters.TCreateUserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
@@ -25,5 +25,7 @@ func CreateUser(c *gin.Context) {
 		userRequest.Age,
 	)
 
-	c.JSON(http.StatusCreated, newUser)
+	uc.service.CreateUserService(newUser)
+
+	c.JSON(http.StatusCreated, nil)
 }

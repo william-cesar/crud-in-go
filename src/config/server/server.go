@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/william-cesar/crud-in-go/src/controller/routes"
+	"github.com/william-cesar/crud-in-go/src/controllers/routes"
 )
 
 func Init() {
