@@ -5,7 +5,7 @@ type tUser struct {
 	name     string
 	email    string
 	password string
-	age      uint8
+	age      int8
 	active   bool
 }
 
@@ -25,7 +25,7 @@ func (u *tUser) GetPassword() string {
 	return u.password
 }
 
-func (u *tUser) GetAge() uint8 {
+func (u *tUser) GetAge() int8 {
 	return u.age
 }
 
@@ -49,7 +49,7 @@ func (u *tUser) SetPassword(password string) {
 	u.password = password
 }
 
-func (u *tUser) SetAge(age uint8) {
+func (u *tUser) SetAge(age int8) {
 	u.age = age
 }
 

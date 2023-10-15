@@ -5,13 +5,13 @@ type IUser interface {
 	GetName() string
 	GetEmail() string
 	GetPassword() string
-	GetAge() uint8
+	GetAge() int8
 	IsActive() bool
 }
 
 func NewUser(
 	email, password, name string,
-	age uint8,
+	age int8,
 ) IUser {
 	return &tUser{
 		email:    email,
