@@ -10,7 +10,7 @@ import (
 )
 
 func (uc *tUserController) CreateUser(c *gin.Context) {
-	var userRequest adapters.TCreateUserRequest
+	var userRequest adapters.TUserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
 		reqErr := validations.ValidateUserError(err)
@@ -26,6 +26,5 @@ func (uc *tUserController) CreateUser(c *gin.Context) {
 	)
 
 	uc.service.CreateUserService(newUser)
-
-	c.JSON(http.StatusCreated, nil)
+	c.JSON(http.StatusCreated, adapters.ConvertDomainToResponse(newUser))
 }
