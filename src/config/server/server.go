@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/william-cesar/crud-in-go/src/config/database/mongodb"
 	"github.com/william-cesar/crud-in-go/src/controllers/routes"
 )
 
@@ -28,8 +27,6 @@ func Init() {
 	router.SetTrustedProxies([]string{"*"})
 
 	routes.InitRoutes(&router.RouterGroup)
-
-	mongodb.InitConnection()
 
 	if err := router.Run(url); err != nil {
 		log.Fatal(err)
