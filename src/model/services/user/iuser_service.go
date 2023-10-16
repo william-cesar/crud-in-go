@@ -11,7 +11,7 @@ func NewUserService() IUserService {
 type tUserService struct{}
 
 type IUserService interface {
-	CreateUserService(d.IUser) // (d.IUser, *ierrors.TError)
+	CreateUserService(d.IUser)
 	// GetUserById()
 	// UpdateUser()
 	// DeleteUser()
