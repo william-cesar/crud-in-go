@@ -9,24 +9,20 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func InitConnection() {
-	conn := os.Getenv("DB_CONNECTION")
+func NewMongoDBConnection(ctx context.Context) (*mongo.Database, error) {
+	conn, db := os.Getenv("DB_CONNECTION"), os.Getenv("DB_NAME")
 
-	if conn == "" {
-		log.Fatal("Database connection string is not set")
-		return
-	}
-
-	ctx := context.Background()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(conn))
 
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	if err := client.Ping(ctx, nil); err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	log.Println("Connected to MongoDB")
+
+	return client.Database(db), nil
 }
