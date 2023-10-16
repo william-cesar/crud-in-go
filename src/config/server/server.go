@@ -19,11 +19,6 @@ func Init() {
 
 	url := os.Getenv("URL")
 
-	if url == "" {
-		log.Fatal("URL is not set")
-		return
-	}
-
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.SetTrustedProxies([]string{"*"})
