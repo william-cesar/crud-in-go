@@ -1,7 +1,7 @@
 package user
 
 import (
-	d "github.com/william-cesar/crud-in-go/src/view/domain"
+	d "github.com/william-cesar/crud-in-go/src/model/domain"
 )
 
 func NewUserService() IUserService {

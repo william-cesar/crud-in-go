@@ -8,6 +8,7 @@ type IUser interface {
 	GetAge() int8
 	IsActive() bool
 	EncryptPassword()
+	SetID(id string)
 }
 
 func NewUser(

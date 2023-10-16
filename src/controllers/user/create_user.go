@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/william-cesar/crud-in-go/src/config/validations"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
-	"github.com/william-cesar/crud-in-go/src/view/domain"
 )
 
 func (uc *tUserController) CreateUser(c *gin.Context) {

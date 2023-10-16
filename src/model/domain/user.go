@@ -45,3 +45,7 @@ func (u *tUser) EncryptPassword() {
 	hash.Write([]byte(u.password))
 	u.password = hex.EncodeToString(hash.Sum(nil))
 }
+
+func (u *tUser) SetID(id string) {
+	u.id = id
+}
