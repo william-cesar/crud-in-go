@@ -6,13 +6,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/william-cesar/crud-in-go/src/config/database/mongodb"
 	"github.com/william-cesar/crud-in-go/src/controllers/routes"
 )
 
 func Init() {
-	err := godotenv.Load()
-
-	if err != nil {
+	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")
 		return
 	}
@@ -29,6 +28,8 @@ func Init() {
 	router.SetTrustedProxies([]string{"*"})
 
 	routes.InitRoutes(&router.RouterGroup)
+
+	mongodb.InitConnection()
 
 	if err := router.Run(url); err != nil {
 		log.Fatal(err)
