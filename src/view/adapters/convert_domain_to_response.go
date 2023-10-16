@@ -6,7 +6,7 @@ import (
 
 func ConvertDomainToResponse(domainUser domain.IUser) *TUserResponse {
 	return &TUserResponse{
-		ID:    "",
+		ID:    domainUser.GetId(),
 		Name:  domainUser.GetName(),
 		Email: domainUser.GetEmail(),
 		Age:   domainUser.GetAge(),
