@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"os"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
 	ma "github.com/william-cesar/crud-in-go/src/model/adapters"
@@ -11,8 +10,7 @@ import (
 )
 
 func (ur *tUserRepository) CreateUser(d d.IUser) (d.IUser, *ierrors.TError) {
-	collectionName := os.Getenv("DB_COLLECTION")
-	collection := ur.dbconn.Collection(collectionName)
+	collection := ur.dbconn.Collection(COLLECTION)
 
 	dbEntity := ma.ConvertDomainToEntity(d)
 
