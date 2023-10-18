@@ -8,6 +8,7 @@ import (
 func InitAuthRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 	signup := url + "/signup"
 	login := url + "/login"
+	activate := url + "/activate/:id"
 
 	r.POST(signup, func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -20,4 +21,6 @@ func InitAuthRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 			"message": "Logged in",
 		})
 	})
+
+	r.GET(activate, uc.ActivateUser)
 }
