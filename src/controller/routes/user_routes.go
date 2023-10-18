@@ -6,7 +6,7 @@ import (
 )
 
 func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
-	user := url + "/user"
+	user := url + "/users"
 	userById := user + "/:id"
 
 	r.GET(userById, func(c *gin.Context) {

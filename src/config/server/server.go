@@ -17,7 +17,7 @@ func Init() {
 		return
 	}
 
-	url := os.Getenv("URL")
+	url := os.Getenv("PORT")
 
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
