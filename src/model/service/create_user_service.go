@@ -29,7 +29,9 @@ func (us *tUserService) CreateUserService(
 		savedUser.GetEmail(),
 		savedUser.GetId(),
 	); err != nil {
-		// implement rollback
+		if dErr := us.repository.DeleteUser(savedUser.GetId()); dErr != nil {
+			return nil, dErr
+		}
 		return nil, err
 	}
 
