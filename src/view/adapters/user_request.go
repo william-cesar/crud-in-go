@@ -6,3 +6,7 @@ type TUserRequest struct {
 	Password string `json:"password" binding:"required,min=6,max=64,containsany=!@#$%&_-^~/?"`
 	Age      int8   `json:"age" binding:"required,min=1,max=150"`
 }
+
+type TUserEmailRequest struct {
+	Email string `json:"email"`
+}
