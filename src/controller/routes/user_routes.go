@@ -18,4 +18,5 @@ func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 
 	r.POST(user, uc.FindUser)
 	r.POST(base, uc.CreateUser)
+	r.DELETE(userById, uc.DeleteUser)
 }
