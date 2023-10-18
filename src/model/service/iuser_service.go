@@ -18,6 +18,7 @@ type tUserService struct {
 
 type IUserService interface {
 	CreateUserService(d.IUser) (d.IUser, *ierrors.TError)
+	FindUserService(email string) (d.IUser, *ierrors.TError)
 	// GetUserById()
 	// UpdateUser()
 	// DeleteUser()
