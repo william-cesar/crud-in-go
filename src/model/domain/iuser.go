@@ -12,18 +12,20 @@ type IUser interface {
 	EncryptPassword()
 	SendActivationEmail(email, id string) *ierrors.TError
 	SetID(id string)
+	SetActive()
 }
 
 func NewUser(
 	email, password, name string,
 	age int8,
+	active bool,
 ) IUser {
 	return &tUser{
 		email:    email,
 		password: password,
 		name:     name,
 		age:      age,
-		active:   false,
+		active:   active,
 	}
 }
 

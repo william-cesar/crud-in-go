@@ -36,3 +36,7 @@ func (u *tUser) IsActive() bool {
 func (u *tUser) SetID(id string) {
 	u.id = id
 }
+
+func (u *tUser) SetActive() {
+	u.active = true
+}

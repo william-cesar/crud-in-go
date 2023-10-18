@@ -18,11 +18,13 @@ func (uc *tUserController) CreateUser(c *gin.Context) {
 		return
 	}
 
+	defaultActive := false
 	newUser := domain.NewUser(
 		userRequest.Email,
 		userRequest.Password,
 		userRequest.Name,
 		userRequest.Age,
+		defaultActive,
 	)
 
 	res, err := uc.service.CreateUserService(newUser)

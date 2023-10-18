@@ -11,6 +11,7 @@ func ConvertEntityToDomain(ue e.TuserEntity) d.IUser {
 		ue.Password,
 		ue.Name,
 		ue.Age,
+		ue.Active,
 	)
 
 	domain.SetID(ue.ID.Hex())
