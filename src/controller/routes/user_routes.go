@@ -6,8 +6,9 @@ import (
 )
 
 func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
-	user := url + "/users"
-	userById := user + "/:id"
+	base := url + "/users"
+	user := base + "/user"
+	userById := base + "/user/:id"
 
 	r.GET(userById, func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -15,5 +16,6 @@ func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 		})
 	})
 
-	r.POST(user, uc.CreateUser)
+	r.POST(user, uc.FindUser)
+	r.POST(base, uc.CreateUser)
 }
