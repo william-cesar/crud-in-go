@@ -15,5 +15,13 @@ func (us *tUserService) CreateUserService(
 		return nil, err
 	}
 
+	if err := savedUser.SendActivationEmail(
+		savedUser.GetEmail(),
+		savedUser.GetId(),
+	); err != nil {
+		// implement rollback
+		return nil, err
+	}
+
 	return savedUser, nil
 }

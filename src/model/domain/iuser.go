@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/william-cesar/crud-in-go/src/config/ierrors"
+
 type IUser interface {
 	GetId() string
 	GetName() string
@@ -8,6 +10,7 @@ type IUser interface {
 	GetAge() int8
 	IsActive() bool
 	EncryptPassword()
+	SendActivationEmail(email, id string) *ierrors.TError
 	SetID(id string)
 }
 
