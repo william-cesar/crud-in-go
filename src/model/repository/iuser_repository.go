@@ -21,4 +21,5 @@ type tUserRepository struct {
 type IUserRepository interface {
 	CreateUser(d.IUser) (d.IUser, *ierrors.TError)
 	FindUser(email string) (d.IUser, *ierrors.TError)
+	DeleteUser(id string) *ierrors.TError
 }
