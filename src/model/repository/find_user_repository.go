@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
 	ma "github.com/william-cesar/crud-in-go/src/model/adapters"
@@ -21,7 +20,6 @@ func (ur *tUserRepository) FindUser(email string) (d.IUser, *ierrors.TError) {
 	err := collection.FindOne(context.Background(), filter).Decode(dbEntity)
 
 	if err != nil {
-		fmt.Println(err)
 		if err == mongo.ErrNoDocuments {
 			return nil, ierrors.NewNotFoundError()
 		}
