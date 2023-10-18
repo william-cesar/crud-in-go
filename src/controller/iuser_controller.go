@@ -14,9 +14,7 @@ func NewUserController(iservice us.IUserService) IUserController {
 type IUserController interface {
 	CreateUser(c *gin.Context)
 	FindUser(c *gin.Context)
-	// GetUserById(c *gin.Context)
-	// UpdateUser(c *gin.Context)
-	// DeleteUser(c *gin.Context)
+	DeleteUser(c *gin.Context)
 }
 
 type tUserController struct {

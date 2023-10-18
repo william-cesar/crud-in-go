@@ -7,3 +7,7 @@ type TUserResponse struct {
 	Age    int8   `json:"age"`
 	Active bool   `json:"active"`
 }
+
+type TSuccessResponse struct {
+	Message string `json:"message"`
+}
