@@ -30,7 +30,7 @@ func (uc *tUserController) Login(c *gin.Context) {
 		return
 	}
 
-	c.Header("Authorization", "Bearer "+token)
+	c.Header("Authorization", token)
 
 	res := adapters.TSuccessResponse{
 		Message: "User logged in successfully.",
