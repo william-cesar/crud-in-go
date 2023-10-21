@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	"github.com/william-cesar/crud-in-go/src/model/adapters"
 	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,18 +12,27 @@ import (
 )
 
 func (ur *tUserRepository) UpdateUser(id string, user domain.IUser) *ierrors.TError {
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["INIT"]["UPDATE"])
+
 	collection := ur.dbconn.Collection(COLLECTION)
 
 	dbEntity := adapters.ConvertDomainToEntity(user)
 
-	userId, _ := primitive.ObjectIDFromHex(id)
+	userId, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		return ierrors.NewBadRequestError()
+	}
 
 	filter := bson.D{{Key: "_id", Value: userId}}
 	fields := bson.D{{Key: "$set", Value: dbEntity}}
 
 	if _, err := collection.UpdateOne(context.Background(), filter, fields); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["UPDATE"])
 		return ierrors.NewInternalError()
 	}
 
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["OK"]["UPDATED"])
 	return nil
 }
