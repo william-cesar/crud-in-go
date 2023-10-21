@@ -6,13 +6,11 @@ import (
 )
 
 func InitUserRoutes(r *gin.RouterGroup, uc uc.IUserController) {
-	base := baseUrl + "/users"
-	user := base + "/user"
-	userById := base + "/user/:id"
+	base := baseUrl + "/user"
+	userById := base + "/:id"
 
+	r.POST(base, uc.FindUserByEmail)
 	r.GET(userById, uc.FindUserById)
-	r.POST(user, uc.FindUserByEmail)
-	r.POST(base, uc.CreateUser)
 	r.PATCH(userById, uc.UpdateUser)
 	r.DELETE(userById, uc.DeleteUser)
 }

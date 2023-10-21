@@ -10,8 +10,7 @@ func InitAuthRoutes(r *gin.RouterGroup, uc uc.IUserController) {
 	login := baseUrl + "/login"
 	activate := baseUrl + "/activate/:id"
 
-	r.POST(signup, uc.Login)
-
 	r.POST(login, uc.Login)
+	r.POST(signup, uc.CreateUser)
 	r.GET(activate, uc.ActivateUser)
 }
