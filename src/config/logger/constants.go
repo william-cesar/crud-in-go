@@ -2,6 +2,7 @@ package logger
 
 var JOURNEY = map[string]string{
 	"DB":                  "DB CONNECTION",
+	"SERVER":              "SERVER",
 	"ACTIVATE":            "USER ACTIVATION",
 	"AUTH":                "AUTHENTICATION",
 	"ACTIVATE_CONTROLLER": "ACTIVATE USER - CONTROLLER",
@@ -27,6 +28,7 @@ var JOURNEY = map[string]string{
 var MESSAGE = map[string]map[string]string{
 	"INIT": {
 		"DB":               "Initializing DB connection",
+		"SERVER":           "Initializing server",
 		"EMAIL":            "Initializing email service",
 		"TEMPLATE":         "Initializing email template",
 		"SEND":             "Initializing email sending",
@@ -45,6 +47,8 @@ var MESSAGE = map[string]map[string]string{
 	"ERROR": {
 		"DB_CONN":          "Could not establish connection to DB",
 		"DB_PING":          "Could not ping DB",
+		"LOAD_ENV":         "Could not load .env file",
+		"SERVER":           "Could not start server",
 		"SEND_EMAIL":       "Could not send activation email",
 		"TOKEN_SIGNATURE":  "Could not verify token signature",
 		"TOKEN_VALIDITY":   "Could not verify token validity",
