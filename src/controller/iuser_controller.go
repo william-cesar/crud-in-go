@@ -13,7 +13,8 @@ func NewUserController(iservice us.IUserService) IUserController {
 
 type IUserController interface {
 	CreateUser(c *gin.Context)
-	FindUser(c *gin.Context)
+	FindUserByEmail(c *gin.Context)
+	FindUserById(c *gin.Context)
 	DeleteUser(c *gin.Context)
 	ActivateUser(c *gin.Context)
 	UpdateUser(c *gin.Context)
