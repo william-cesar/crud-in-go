@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	"github.com/william-cesar/crud-in-go/src/config/validations"
 	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
@@ -13,9 +14,12 @@ import (
 )
 
 func (uc *tUserController) UpdateUser(c *gin.Context) {
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["INIT"]["UPDATE"])
+
 	var uReq adapters.TUserUpdateRequest
 
 	if err := c.ShouldBindJSON(&uReq); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"])
 		reqErr := validations.ValidateUserError(err)
 		c.JSON(reqErr.StatusCode, reqErr)
 		return
@@ -24,6 +28,7 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
@@ -32,6 +37,7 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	user := domain.NewUserUpdate(uReq.Password, uReq.Name, uReq.Age)
 
 	if err := uc.service.UpdateUserService(id, user); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["UPDATE"])
 		c.JSON(err.StatusCode, err)
 		return
 	}
@@ -39,5 +45,6 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	var res adapters.TSuccessResponse
 	res.Message = "User updated successfully."
 
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["OK"]["UPDATED"])
 	c.JSON(http.StatusOK, res)
 }
