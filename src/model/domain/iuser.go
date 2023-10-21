@@ -10,10 +10,13 @@ type IUser interface {
 	GetAge() int8
 	GetActive() bool
 	IsActive() bool
-	EncryptPassword()
 	SendActivationEmail(email, id string) *ierrors.TError
 	SetID(id string)
 	SetActive()
+	EncryptPassword()
+	encryptEmail() string
+
+	GenerateToken() (string, *ierrors.TError)
 }
 
 func NewUser(
