@@ -16,3 +16,8 @@ type TUserUpdateRequest struct {
 	Password string `json:"password,omitempty" binding:"omitempty,min=6,max=64,containsany=!@#$%&_-^~/?"`
 	Age      int8   `json:"age,omitempty" binding:"omitempty,min=1,max=150"`
 }
+
+type TUserLoginRequest struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=6,containsany=!@#$%&_-^~/?"`
+}
