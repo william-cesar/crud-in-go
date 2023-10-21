@@ -2,12 +2,12 @@ package service
 
 import (
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 )
 
 func (us *tUserService) CreateUserService(
-	newUser d.IUser,
-) (d.IUser, *ierrors.TError) {
+	newUser domain.IUser,
+) (domain.IUser, *ierrors.TError) {
 	user, err := us.repository.FindUserByEmail(newUser.GetEmail())
 
 	if err != nil && err.StatusCode != 404 {
