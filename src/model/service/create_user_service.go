@@ -8,7 +8,7 @@ import (
 func (us *tUserService) CreateUserService(
 	newUser d.IUser,
 ) (d.IUser, *ierrors.TError) {
-	user, err := us.repository.FindUser(newUser.GetEmail())
+	user, err := us.repository.FindUserByEmail(newUser.GetEmail())
 
 	if err != nil && err.StatusCode != 404 {
 		return nil, err
