@@ -66,10 +66,10 @@ var MESSAGE = map[string]map[string]string{
 		"CREATION":         "Could not create user",
 		"DELETION":         "Could not delete user",
 		"UPDATE":           "Could not update user",
+		"UNIQUE":           "User already exists",
 	},
 	"WARN": {
 		"ACTIVE": "User already activated",
-		"UNIQUE": "User already exists",
 	},
 	"OK": {
 		"DB_CONN":          "Connected to MongoDB",
