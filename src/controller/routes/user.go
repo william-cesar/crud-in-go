@@ -10,7 +10,7 @@ func InitUserRoutes(r *gin.RouterGroup, uc uc.IUserController) {
 	base := baseUrl + "/user"
 	userById := base + "/:id"
 
-	r.Use(m.Authorized)
+	r.Use(m.Auth)
 
 	r.POST(base, uc.FindUserByEmail)
 	r.GET(userById, uc.FindUserById)
