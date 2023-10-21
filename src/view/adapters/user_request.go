@@ -10,3 +10,9 @@ type TUserRequest struct {
 type TUserEmailRequest struct {
 	Email string `json:"email"`
 }
+
+type TUserUpdateRequest struct {
+	Name     string `json:"name,omitempty" binding:"omitempty,min=2,max=100"`
+	Password string `json:"password,omitempty" binding:"omitempty,min=6,max=64,containsany=!@#$%&_-^~/?"`
+	Age      int8   `json:"age,omitempty" binding:"omitempty,min=1,max=150"`
+}

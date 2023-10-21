@@ -29,6 +29,17 @@ func NewUser(
 	}
 }
 
+func NewUserUpdate(
+	password, name string,
+	age int8,
+) IUser {
+	return &tUser{
+		password: password,
+		name:     name,
+		age:      age,
+	}
+}
+
 func NewUserLogin(
 	email, password string,
 ) IUser {
