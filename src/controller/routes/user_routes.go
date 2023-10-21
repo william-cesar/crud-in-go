@@ -5,8 +5,8 @@ import (
 	uc "github.com/william-cesar/crud-in-go/src/controller"
 )
 
-func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
-	base := url + "/users"
+func InitUserRoutes(r *gin.RouterGroup, uc uc.IUserController) {
+	base := baseUrl + "/users"
 	user := base + "/user"
 	userById := base + "/user/:id"
 

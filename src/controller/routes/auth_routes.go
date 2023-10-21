@@ -5,10 +5,10 @@ import (
 	uc "github.com/william-cesar/crud-in-go/src/controller"
 )
 
-func InitAuthRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
-	signup := url + "/signup"
-	login := url + "/login"
-	activate := url + "/activate/:id"
+func InitAuthRoutes(r *gin.RouterGroup, uc uc.IUserController) {
+	signup := baseUrl + "/signup"
+	login := baseUrl + "/login"
+	activate := baseUrl + "/activate/:id"
 
 	r.POST(signup, func(c *gin.Context) {
 		c.JSON(200, gin.H{

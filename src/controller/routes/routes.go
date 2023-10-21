@@ -8,9 +8,11 @@ import (
 	uc "github.com/william-cesar/crud-in-go/src/controller"
 )
 
-func InitRoutes(r *gin.RouterGroup, uc uc.IUserController) {
-	baseUrl := fmt.Sprintf("/%s", os.Getenv("ENTRYPOINT"))
+var baseUrl string
 
-	InitAuthRoutes(baseUrl, r, uc)
-	InitUserRoutes(baseUrl, r, uc)
+func InitRoutes(r *gin.RouterGroup, uc uc.IUserController) {
+	baseUrl = fmt.Sprintf("/%s", os.Getenv("ENTRYPOINT"))
+
+	InitAuthRoutes(r, uc)
+	InitUserRoutes(r, uc)
 }
