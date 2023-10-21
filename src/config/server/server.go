@@ -2,19 +2,21 @@ package server
 
 import (
 	"context"
-	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/william-cesar/crud-in-go/src/config/database/mongodb"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	"github.com/william-cesar/crud-in-go/src/controller/routes"
 )
 
 func Init() {
+	logger.NewInfoLog(logger.JOURNEY["SERVER"], logger.MESSAGE["INIT"]["SERVER"])
+
 	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
-		return
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["LOAD_ENV"])
+		os.Exit(1)
 	}
 
 	url := os.Getenv("PORT")
@@ -26,8 +28,8 @@ func Init() {
 	dbconn, err := mongodb.NewMongoDBConnection(context.Background())
 
 	if err != nil {
-		log.Fatal(err)
-		return
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["DB_CONN"])
+		os.Exit(1)
 	}
 
 	uc := InitDependencies(dbconn)
@@ -35,6 +37,7 @@ func Init() {
 	routes.InitRoutes(&router.RouterGroup, uc)
 
 	if err := router.Run(url); err != nil {
-		log.Fatal(err)
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["SERVER"])
+		os.Exit(1)
 	}
 }
