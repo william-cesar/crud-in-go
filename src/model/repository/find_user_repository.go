@@ -4,15 +4,15 @@ import (
 	"context"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	ma "github.com/william-cesar/crud-in-go/src/model/adapters"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/adapters"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"github.com/william-cesar/crud-in-go/src/model/entity"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (ur *tUserRepository) FindUserByEmail(email string) (d.IUser, *ierrors.TError) {
+func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors.TError) {
 	collection := ur.dbconn.Collection(COLLECTION)
 
 	dbEntity := &entity.TuserEntity{}
@@ -31,10 +31,10 @@ func (ur *tUserRepository) FindUserByEmail(email string) (d.IUser, *ierrors.TErr
 		return nil, ierrors.NewBadRequestError("User is not activated.")
 	}
 
-	return ma.ConvertEntityToDomain(*dbEntity), nil
+	return adapters.ConvertEntityToDomain(*dbEntity), nil
 }
 
-func (ur *tUserRepository) FindUserById(id string) (d.IUser, *ierrors.TError) {
+func (ur *tUserRepository) FindUserById(id string) (domain.IUser, *ierrors.TError) {
 	collection := ur.dbconn.Collection(COLLECTION)
 
 	dbEntity := &entity.TuserEntity{}
@@ -55,5 +55,5 @@ func (ur *tUserRepository) FindUserById(id string) (d.IUser, *ierrors.TError) {
 		return nil, ierrors.NewBadRequestError("User is not activated.")
 	}
 
-	return ma.ConvertEntityToDomain(*dbEntity), nil
+	return adapters.ConvertEntityToDomain(*dbEntity), nil
 }

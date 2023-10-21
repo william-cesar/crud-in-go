@@ -4,16 +4,16 @@ import (
 	"context"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	ma "github.com/william-cesar/crud-in-go/src/model/adapters"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/adapters"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (ur *tUserRepository) UpdateUser(id string, user d.IUser) *ierrors.TError {
+func (ur *tUserRepository) UpdateUser(id string, user domain.IUser) *ierrors.TError {
 	collection := ur.dbconn.Collection(COLLECTION)
 
-	dbEntity := ma.ConvertDomainToEntity(user)
+	dbEntity := adapters.ConvertDomainToEntity(user)
 
 	userId, _ := primitive.ObjectIDFromHex(id)
 

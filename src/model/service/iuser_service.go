@@ -2,25 +2,27 @@ package service
 
 import (
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
-	ur "github.com/william-cesar/crud-in-go/src/model/repository"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/repository"
 )
 
-func NewUserService(irepository ur.IUserRepository) IUserService {
+func NewUserService(irepository repository.IUserRepository) IUserService {
 	return &tUserService{
 		repository: irepository,
 	}
 }
 
 type tUserService struct {
-	repository ur.IUserRepository
+	repository repository.IUserRepository
 }
 
 type IUserService interface {
-	CreateUserService(d.IUser) (d.IUser, *ierrors.TError)
-	FindUserByEmailService(email string) (d.IUser, *ierrors.TError)
-	FindUserByIdService(email string) (d.IUser, *ierrors.TError)
+	CreateUserService(domain.IUser) (domain.IUser, *ierrors.TError)
+	FindUserByEmailService(email string) (domain.IUser, *ierrors.TError)
+	FindUserByIdService(email string) (domain.IUser, *ierrors.TError)
 	DeleteUserService(id string) *ierrors.TError
 	ActivateUserService(id string) *ierrors.TError
-	UpdateUserService(id string, user d.IUser) *ierrors.TError
+	UpdateUserService(id string, user domain.IUser) *ierrors.TError
+
+	LoginUserService(credentials domain.IUser) *ierrors.TError
 }

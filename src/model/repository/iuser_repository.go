@@ -2,7 +2,7 @@ package repository
 
 import (
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -19,10 +19,12 @@ type tUserRepository struct {
 }
 
 type IUserRepository interface {
-	CreateUser(d.IUser) (d.IUser, *ierrors.TError)
-	FindUserByEmail(email string) (d.IUser, *ierrors.TError)
-	FindUserById(email string) (d.IUser, *ierrors.TError)
+	CreateUser(domain.IUser) (domain.IUser, *ierrors.TError)
+	FindUserByEmail(email string) (domain.IUser, *ierrors.TError)
+	FindUserById(email string) (domain.IUser, *ierrors.TError)
 	DeleteUser(id string) *ierrors.TError
 	ActivateUser(id string) *ierrors.TError
-	UpdateUser(id string, user d.IUser) *ierrors.TError
+	UpdateUser(id string, user domain.IUser) *ierrors.TError
+
+	Login(credentials domain.IUser) *ierrors.TError
 }

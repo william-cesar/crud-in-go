@@ -1,12 +1,12 @@
 package adapters
 
 import (
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
-	e "github.com/william-cesar/crud-in-go/src/model/entity"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/entity"
 )
 
-func ConvertEntityToDomain(ue e.TuserEntity) d.IUser {
-	domain := d.NewUser(
+func ConvertEntityToDomain(ue entity.TuserEntity) domain.IUser {
+	user := domain.NewUser(
 		ue.Email,
 		ue.Password,
 		ue.Name,
@@ -14,6 +14,6 @@ func ConvertEntityToDomain(ue e.TuserEntity) d.IUser {
 		ue.Active,
 	)
 
-	domain.SetID(ue.ID.Hex())
-	return domain
+	user.SetID(ue.ID.Hex())
+	return user
 }

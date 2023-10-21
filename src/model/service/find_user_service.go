@@ -2,10 +2,10 @@ package service
 
 import (
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
-	d "github.com/william-cesar/crud-in-go/src/model/domain"
+	"github.com/william-cesar/crud-in-go/src/model/domain"
 )
 
-func (us *tUserService) FindUserByEmailService(email string) (d.IUser, *ierrors.TError) {
+func (us *tUserService) FindUserByEmailService(email string) (domain.IUser, *ierrors.TError) {
 	user, err := us.repository.FindUserByEmail(email)
 
 	if err != nil {
@@ -15,7 +15,7 @@ func (us *tUserService) FindUserByEmailService(email string) (d.IUser, *ierrors.
 	return user, nil
 }
 
-func (us *tUserService) FindUserByIdService(id string) (d.IUser, *ierrors.TError) {
+func (us *tUserService) FindUserByIdService(id string) (domain.IUser, *ierrors.TError) {
 	user, err := us.repository.FindUserById(id)
 
 	if err != nil {
