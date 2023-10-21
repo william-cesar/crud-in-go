@@ -23,4 +23,5 @@ type IUserRepository interface {
 	FindUser(email string) (d.IUser, *ierrors.TError)
 	DeleteUser(id string) *ierrors.TError
 	ActivateUser(id string) *ierrors.TError
+	UpdateUser(id string, user d.IUser) *ierrors.TError
 }
