@@ -40,6 +40,5 @@ func (uc *tUserController) CreateUser(c *gin.Context) {
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["OK"]["CREATED"])
-
 	c.JSON(http.StatusCreated, adapters.ConvertDomainToResponse(res))
 }

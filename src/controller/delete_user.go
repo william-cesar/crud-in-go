@@ -33,6 +33,5 @@ func (uc *tUserController) DeleteUser(c *gin.Context) {
 	res.Message = "User deleted successfully."
 
 	logger.NewInfoLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["OK"]["DELETED"])
-
 	c.JSON(http.StatusOK, res)
 }

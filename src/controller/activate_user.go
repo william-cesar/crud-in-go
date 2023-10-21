@@ -33,6 +33,5 @@ func (uc *tUserController) ActivateUser(c *gin.Context) {
 	res.Message = "User activated successfully."
 
 	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["OK"]["ACTIVE"])
-
 	c.JSON(http.StatusOK, res)
 }
