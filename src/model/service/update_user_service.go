@@ -2,17 +2,22 @@ package service
 
 import (
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	"github.com/william-cesar/crud-in-go/src/model/domain"
 )
 
 func (us *tUserService) UpdateUserService(id string, user domain.IUser) *ierrors.TError {
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["INIT"]["UPDATE"])
+
 	dbUser, err := us.repository.FindUserById(id)
 
 	if err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
 		return err
 	}
 
 	if dbUser != nil && !dbUser.GetActive() {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["ERROR"]["ACTIVE"])
 		return ierrors.NewBadRequestError("User is not activated.")
 	}
 
@@ -21,8 +26,10 @@ func (us *tUserService) UpdateUserService(id string, user domain.IUser) *ierrors
 	}
 
 	if err := us.repository.UpdateUser(id, user); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["ERROR"]["UPDATE"])
 		return err
 	}
 
+	logger.NewInfoLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["OK"]["UPDATED"])
 	return nil
 }
