@@ -10,13 +10,8 @@ func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 	user := base + "/user"
 	userById := base + "/user/:id"
 
-	r.GET(userById, func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "User found",
-		})
-	})
-
 	r.POST(user, uc.FindUser)
 	r.POST(base, uc.CreateUser)
+	r.POST(userById, uc.UpdateUser)
 	r.DELETE(userById, uc.DeleteUser)
 }
