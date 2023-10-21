@@ -23,12 +23,14 @@ func (uc *tUserController) Login(c *gin.Context) {
 		userLogin.Password,
 	)
 
-	err := uc.service.LoginUserService(credentials)
+	token, err := uc.service.LoginUserService(credentials)
 
 	if err != nil {
 		c.JSON(err.StatusCode, err)
 		return
 	}
+
+	c.Header("Authorization", "Bearer "+token)
 
 	res := adapters.TSuccessResponse{
 		Message: "User logged in successfully.",

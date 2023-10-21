@@ -12,11 +12,6 @@ func InitAuthRoutes(r *gin.RouterGroup, uc uc.IUserController) {
 
 	r.POST(signup, uc.Login)
 
-	r.POST(login, func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Logged in",
-		})
-	})
-
+	r.POST(login, uc.Login)
 	r.GET(activate, uc.ActivateUser)
 }
