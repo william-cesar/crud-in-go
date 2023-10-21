@@ -12,19 +12,19 @@ import (
 )
 
 func (uc *tUserController) ActivateUser(c *gin.Context) {
-	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["INIT"]["ACTIVATION"])
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["INIT"]["ACTIVATION"])
 
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
 	}
 
 	if err := uc.service.ActivateUserService(id); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["ACTIVATION"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["ACTIVATION"])
 		c.JSON(err.StatusCode, err)
 		return
 	}
@@ -32,7 +32,7 @@ func (uc *tUserController) ActivateUser(c *gin.Context) {
 	var res adapters.TSuccessResponse
 	res.Message = "User activated successfully."
 
-	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["OK"]["ACTIVE"])
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["OK"]["ACTIVE"])
 
 	c.JSON(http.StatusOK, res)
 }
