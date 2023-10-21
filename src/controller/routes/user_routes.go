@@ -10,8 +10,9 @@ func InitUserRoutes(url string, r *gin.RouterGroup, uc uc.IUserController) {
 	user := base + "/user"
 	userById := base + "/user/:id"
 
-	r.POST(user, uc.FindUser)
+	r.GET(userById, uc.FindUserById)
+	r.POST(user, uc.FindUserByEmail)
 	r.POST(base, uc.CreateUser)
-	r.POST(userById, uc.UpdateUser)
+	r.PATCH(userById, uc.UpdateUser)
 	r.DELETE(userById, uc.DeleteUser)
 }
