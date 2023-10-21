@@ -24,5 +24,7 @@ type IUserService interface {
 	ActivateUserService(id string) *ierrors.TError
 	UpdateUserService(id string, user domain.IUser) *ierrors.TError
 
-	LoginUserService(credentials domain.IUser) *ierrors.TError
+	findUserByEmailAndPassword(credentials domain.IUser) *ierrors.TError
+
+	LoginUserService(credentials domain.IUser) (string, *ierrors.TError)
 }

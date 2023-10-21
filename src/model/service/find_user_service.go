@@ -24,3 +24,9 @@ func (us *tUserService) FindUserByIdService(id string) (domain.IUser, *ierrors.T
 
 	return user, nil
 }
+
+func (us *tUserService) findUserByEmailAndPassword(credentials domain.IUser) *ierrors.TError {
+	err := us.repository.FindUserByEmailAndPassword(credentials)
+
+	return err
+}
