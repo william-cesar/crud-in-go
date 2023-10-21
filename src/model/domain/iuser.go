@@ -8,6 +8,7 @@ type IUser interface {
 	GetEmail() string
 	GetPassword() string
 	GetAge() int8
+	GetActive() bool
 	IsActive() bool
 	EncryptPassword()
 	SendActivationEmail(email, id string) *ierrors.TError

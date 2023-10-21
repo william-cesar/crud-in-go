@@ -29,6 +29,10 @@ func (u *tUser) GetAge() int8 {
 	return u.age
 }
 
+func (u *tUser) GetActive() bool {
+	return u.active
+}
+
 func (u *tUser) IsActive() bool {
 	return u.active
 }
