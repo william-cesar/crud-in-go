@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	gomail "gopkg.in/mail.v2"
 )
 
@@ -13,6 +14,7 @@ const (
 )
 
 func (es *tEmailService) SendActivationEmail(email, subject, template string) *ierrors.TError {
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["INIT"]["EMAIL"])
 	from, password := os.Getenv("EMAIL_SENDER"), os.Getenv("EMAIL_PASSWORD")
 
 	m := gomail.NewMessage()
@@ -24,8 +26,10 @@ func (es *tEmailService) SendActivationEmail(email, subject, template string) *i
 	d := gomail.NewDialer(host, port, from, password)
 
 	if err := d.DialAndSend(m); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
 		return ierrors.NewInternalError()
 	}
 
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["OK"]["SENT"])
 	return nil
 }
