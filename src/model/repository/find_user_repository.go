@@ -57,3 +57,24 @@ func (ur *tUserRepository) FindUserById(id string) (domain.IUser, *ierrors.TErro
 
 	return adapters.ConvertEntityToDomain(*dbEntity), nil
 }
+
+func (ur *tUserRepository) FindUserByEmailAndPassword(credentials domain.IUser) *ierrors.TError {
+	collection := ur.dbconn.Collection(COLLECTION)
+
+	dbEntity := &entity.TuserEntity{}
+
+	filter := bson.D{
+		{Key: "email", Value: credentials.GetEmail()},
+		{Key: "password", Value: credentials.GetPassword()},
+	}
+	err := collection.FindOne(context.Background(), filter).Decode(dbEntity)
+
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return ierrors.NewBadRequestError("Invalid credentials.")
+		}
+		return ierrors.NewInternalError()
+	}
+
+	return nil
+}

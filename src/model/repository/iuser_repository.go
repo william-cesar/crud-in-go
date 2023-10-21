@@ -26,5 +26,5 @@ type IUserRepository interface {
 	ActivateUser(id string) *ierrors.TError
 	UpdateUser(id string, user domain.IUser) *ierrors.TError
 
-	Login(credentials domain.IUser) *ierrors.TError
+	FindUserByEmailAndPassword(credentials domain.IUser) *ierrors.TError
 }
