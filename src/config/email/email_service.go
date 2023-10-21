@@ -15,6 +15,7 @@ const (
 
 func (es *tEmailService) SendActivationEmail(email, subject, template string) *ierrors.TError {
 	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["INIT"]["EMAIL"])
+
 	from, password := os.Getenv("EMAIL_SENDER"), os.Getenv("EMAIL_PASSWORD")
 
 	m := gomail.NewMessage()

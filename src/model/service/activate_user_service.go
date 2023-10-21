@@ -6,7 +6,7 @@ import (
 )
 
 func (us *tUserService) ActivateUserService(id string) *ierrors.TError {
-	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["INIT"]["ACTIVATION"])
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["INIT"]["ACTIVATE"])
 
 	err := us.repository.ActivateUser(id)
 

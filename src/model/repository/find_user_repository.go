@@ -24,17 +24,17 @@ func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors
 	err := collection.FindOne(context.Background(), filter).Decode(dbEntity)
 
 	if err != nil {
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+
 		if err == mongo.ErrNoDocuments {
-			logger.NewWarningLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
 			return nil, ierrors.NewNotFoundError()
 		}
 
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
 		return nil, ierrors.NewInternalError()
 	}
 
 	if !dbEntity.Active {
-		logger.NewWarningLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
 		return nil, ierrors.NewBadRequestError("User is not activated.")
 	}
 

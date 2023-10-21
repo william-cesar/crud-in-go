@@ -28,6 +28,5 @@ func (u *tUser) GenerateToken() (string, *ierrors.TError) {
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["AUTH"], logger.MESSAGE["OK"]["TOKEN_GENERATION"])
-
 	return tokenString, nil
 }
