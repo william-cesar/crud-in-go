@@ -30,12 +30,13 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 
 	user := domain.NewUserUpdate(uReq.Password, uReq.Name, uReq.Age)
 
-	updatedUser, err := uc.service.UpdateUserService(id, user)
-
-	if err != nil {
+	if err := uc.service.UpdateUserService(id, user); err != nil {
 		c.JSON(err.StatusCode, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, adapters.ConvertDomainToResponse(updatedUser))
+	var res adapters.TSuccessResponse
+	res.Message = "User updated successfully."
+
+	c.JSON(http.StatusOK, res)
 }

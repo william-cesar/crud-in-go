@@ -5,19 +5,14 @@ import (
 	d "github.com/william-cesar/crud-in-go/src/model/domain"
 )
 
-func (us *tUserService) UpdateUserService(
-	id string,
-	user d.IUser,
-) (d.IUser, *ierrors.TError) {
+func (us *tUserService) UpdateUserService(id string, user d.IUser) *ierrors.TError {
 	if user.GetPassword() != "" {
 		user.EncryptPassword()
 	}
 
-	updatedUser, err := us.repository.UpdateUser(id, user)
-
-	if err != nil {
-		return nil, err
+	if err := us.repository.UpdateUser(id, user); err != nil {
+		return err
 	}
 
-	return updatedUser, nil
+	return nil
 }

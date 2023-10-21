@@ -21,5 +21,5 @@ type IUserService interface {
 	FindUserService(email string) (d.IUser, *ierrors.TError)
 	DeleteUserService(id string) *ierrors.TError
 	ActivateUserService(id string) *ierrors.TError
-	UpdateUserService(id string, user d.IUser) (d.IUser, *ierrors.TError)
+	UpdateUserService(id string, user d.IUser) *ierrors.TError
 }
