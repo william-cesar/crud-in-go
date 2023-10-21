@@ -4,15 +4,19 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/william-cesar/crud-in-go/src/config/logger"
 	"github.com/william-cesar/crud-in-go/src/config/validations"
 	"github.com/william-cesar/crud-in-go/src/model/domain"
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
 )
 
 func (uc *tUserController) Login(c *gin.Context) {
+	logger.NewInfoLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["INIT"]["LOGIN"])
+
 	var userLogin adapters.TUserLoginRequest
 
 	if err := c.ShouldBindJSON(&userLogin); err != nil {
+		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"])
 		reqErr := validations.ValidateUserError(err)
 		c.JSON(reqErr.StatusCode, reqErr)
 		return
@@ -26,6 +30,7 @@ func (uc *tUserController) Login(c *gin.Context) {
 	token, err := uc.service.LoginUserService(credentials)
 
 	if err != nil {
+		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["TOKEN_VERIFY"])
 		c.JSON(err.StatusCode, err)
 		return
 	}
@@ -36,5 +41,6 @@ func (uc *tUserController) Login(c *gin.Context) {
 		Message: "User logged in successfully.",
 	}
 
+	logger.NewInfoLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["OK"]["LOGGED"])
 	c.JSON(http.StatusCreated, res)
 }
