@@ -16,6 +16,7 @@ type IUserController interface {
 	FindUser(c *gin.Context)
 	DeleteUser(c *gin.Context)
 	ActivateUser(c *gin.Context)
+	UpdateUser(c *gin.Context)
 }
 
 type tUserController struct {
