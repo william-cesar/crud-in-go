@@ -14,7 +14,7 @@ const (
 )
 
 func (es *tEmailService) SendActivationEmail(email, subject, template string) *ierrors.TError {
-	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["INIT"]["EMAIL"])
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["INIT"]["EMAIL"])
 
 	from, password := os.Getenv("EMAIL_SENDER"), os.Getenv("EMAIL_PASSWORD")
 
@@ -27,10 +27,10 @@ func (es *tEmailService) SendActivationEmail(email, subject, template string) *i
 	d := gomail.NewDialer(host, port, from, password)
 
 	if err := d.DialAndSend(m); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
 		return ierrors.NewInternalError()
 	}
 
-	logger.NewInfoLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["OK"]["SENT"])
+	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["OK"]["SENT"])
 	return nil
 }
