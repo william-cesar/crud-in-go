@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/william-cesar/crud-in-go/src/config/ierrors"
@@ -12,7 +13,7 @@ import (
 func (uc *tUserController) DeleteUser(c *gin.Context) {
 	id := c.Param("id")
 
-	if _, err := primitive.ObjectIDFromHex(id); err != nil {
+	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
