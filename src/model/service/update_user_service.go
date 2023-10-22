@@ -18,7 +18,7 @@ func (us *tUserService) UpdateUserService(id string, user domain.IUser) *ierrors
 
 	if dbUser != nil && !dbUser.GetActive() {
 		logger.NewErrorLog(logger.JOURNEY["UPDATE_SERVICE"], logger.MESSAGE["ERROR"]["ACTIVE"])
-		return ierrors.NewBadRequestError("User is not activated.")
+		return ierrors.NewBadRequestError("User is not activated. Please verify your email.")
 	}
 
 	if user.GetPassword() != "" {

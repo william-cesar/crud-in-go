@@ -13,6 +13,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+const activateWarning = "User is not activated. Please verify your email."
+
 func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors.TError) {
 	logger.NewInfoLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["INIT"]["FIND_EMAIL"])
 
@@ -35,7 +37,7 @@ func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors
 
 	if !dbEntity.Active {
 		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
-		return nil, ierrors.NewBadRequestError("User is not activated.")
+		return nil, ierrors.NewBadRequestError(activateWarning)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["OK"]["FOUND"])
@@ -71,7 +73,7 @@ func (ur *tUserRepository) FindUserById(id string) (domain.IUser, *ierrors.TErro
 
 	if !dbEntity.Active {
 		logger.NewWarningLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
-		return nil, ierrors.NewBadRequestError("User is not activated.")
+		return nil, ierrors.NewBadRequestError(activateWarning)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["OK"]["FOUND"])
@@ -99,6 +101,11 @@ func (ur *tUserRepository) FindUserByEmailAndPassword(credentials domain.IUser) 
 
 		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
 		return ierrors.NewInternalError()
+	}
+
+	if !dbEntity.Active {
+		logger.NewWarningLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
+		return ierrors.NewBadRequestError(activateWarning)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["OK"]["FOUND"])
