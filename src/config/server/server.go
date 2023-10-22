@@ -33,6 +33,7 @@ func Init() {
 	}
 
 	uc := InitDependencies(dbconn)
+	InitDocsDependencies()
 
 	routes.InitRoutes(&router.RouterGroup, uc)
 

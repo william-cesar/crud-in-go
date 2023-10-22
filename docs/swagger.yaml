@@ -1,0 +1,295 @@
+definitions:
+  adapters.TSuccessResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  adapters.TUserEmailRequest:
+    properties:
+      email:
+        type: string
+    type: object
+  adapters.TUserLoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  adapters.TUserRequest:
+    properties:
+      age:
+        maximum: 150
+        minimum: 1
+        type: integer
+      email:
+        maxLength: 100
+        type: string
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        maxLength: 64
+        minLength: 6
+        type: string
+    required:
+    - age
+    - email
+    - name
+    - password
+    type: object
+  adapters.TUserResponse:
+    properties:
+      active:
+        type: boolean
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  adapters.TUserUpdateRequest:
+    properties:
+      age:
+        maximum: 150
+        minimum: 1
+        type: integer
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        maxLength: 64
+        minLength: 6
+        type: string
+    type: object
+  ierrors.TCause:
+    properties:
+      field:
+        type: string
+      message:
+        type: string
+    type: object
+  ierrors.TError:
+    properties:
+      causes:
+        items:
+          $ref: '#/definitions/ierrors.TCause'
+        type: array
+      message:
+        type: string
+      statusCode:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /activate/{id}:
+    get:
+      description: Activate user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Activate users
+      tags:
+      - journey
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login and set token in header
+      parameters:
+      - description: user
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/adapters.TUserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Log users in
+      tags:
+      - journey
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      parameters:
+      - description: user
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/adapters.TUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/adapters.TUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Create users
+      tags:
+      - journey
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: Find user by email
+      parameters:
+      - description: user
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/adapters.TUserEmailRequest'
+      - default: Bearer <Add access token here>
+        description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TUserResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Find users
+      tags:
+      - user
+  /user/{id}:
+    delete:
+      description: Delete user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: Bearer <Add access token here>
+        description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Delete users
+      tags:
+      - user
+    get:
+      description: Find user by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: Bearer <Add access token here>
+        description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TUserResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Find users
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      description: Update user
+      parameters:
+      - description: user
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/adapters.TUserUpdateRequest'
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - default: Bearer <Add access token here>
+        description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/adapters.TSuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ierrors.TError'
+      summary: Update users
+      tags:
+      - user
+swagger: "2.0"
