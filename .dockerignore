@@ -1,5 +1,4 @@
 public
 *.log
 *.md
-*.env
 .vscode
