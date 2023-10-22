@@ -11,6 +11,16 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// DeleteUser			godoc
+// @Summary 			Delete users
+// @Description 	Delete user
+// @Produce 			application/json
+// @Param 				id path string true "id"
+// @Tags 					user
+// @Success 			200 {object} adapters.TSuccessResponse
+// @Failure				400 {object} ierrors.TError
+// @Router 				/user/{id}  [delete]
+// @Param 				Authorization header string true "Access token" default(Bearer <Add access token here>)
 func (uc *tUserController) DeleteUser(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["INIT"]["DELETION"])
 

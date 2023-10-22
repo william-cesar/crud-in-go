@@ -11,6 +11,15 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// Activate				godoc
+// @Summary 			Activate users
+// @Description 	Activate user
+// @Produce 			application/json
+// @Tags 					journey
+// @Param 				id path string true "id"
+// @Success 			200 {object} adapters.TSuccessResponse
+// @Failure				400 {object} ierrors.TError
+// @Router 				/activate/{id}  [get]
 func (uc *tUserController) ActivateUser(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["INIT"]["ACTIVATION"])
 

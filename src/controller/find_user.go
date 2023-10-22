@@ -13,6 +13,17 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// FindUserByEmail	godoc
+// @Summary 				Find users
+// @Description 		Find user by email
+// @Param 					json body adapters.TUserEmailRequest true "user"
+// @Accept 					application/json
+// @Produce 				application/json
+// @Tags 						user
+// @Success 				200 {object} adapters.TUserResponse
+// @Failure 				404 {object} ierrors.TError
+// @Router 					/user  [post]
+// @Param 					Authorization header string true "Access token" default(Bearer <Add access token here>)
 func (uc *tUserController) FindUserByEmail(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["INIT"]["FIND_EMAIL"])
 
@@ -46,6 +57,16 @@ func (uc *tUserController) FindUserByEmail(c *gin.Context) {
 	c.JSON(http.StatusOK, adapters.ConvertDomainToResponse(user))
 }
 
+// FindUserById		godoc
+// @Summary 			Find users
+// @Description 	Find user by id
+// @Produce 			application/json
+// @Param 				id path string true "id"
+// @Tags 					user
+// @Success 			200 {object} adapters.TUserResponse
+// @Failure				404 {object} ierrors.TError
+// @Router 				/user/{id}  [get]
+// @Param 				Authorization header string true "Access token" default(Bearer <Add access token here>)
 func (uc *tUserController) FindUserById(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["INIT"]["FIND_ID"])
 

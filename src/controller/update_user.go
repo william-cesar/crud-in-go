@@ -13,6 +13,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// UpdateUser  		godoc
+// @Summary 			Update users
+// @Description 	Update user
+// @Param 				json body adapters.TUserUpdateRequest true "user"
+// @Param 				id path string true "id"
+// @Accept 				application/json
+// @Produce 			application/json
+// @Tags 					user
+// @Success 			200 {object} adapters.TSuccessResponse
+// @Failure 			400 {object} ierrors.TError
+// @Router 				/user/{id}  [patch]
+// @Param 				Authorization header string true "Access token" default(Bearer <Add access token here>)
 func (uc *tUserController) UpdateUser(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["INIT"]["UPDATE"])
 

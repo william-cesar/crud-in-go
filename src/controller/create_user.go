@@ -10,6 +10,16 @@ import (
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
 )
 
+// Signup  				godoc
+// @Summary 			Create users
+// @Description 	Create user
+// @Param 				json body adapters.TUserRequest true "user"
+// @Accept 				application/json
+// @Produce 			application/json
+// @Tags 					journey
+// @Success 			201 {object} adapters.TUserResponse
+// @Failure 			400 {object} ierrors.TError
+// @Router 				/signup  [post]
 func (uc *tUserController) CreateUser(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["INIT"]["CREATION"])
 

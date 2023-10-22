@@ -10,6 +10,16 @@ import (
 	"github.com/william-cesar/crud-in-go/src/view/adapters"
 )
 
+// Login  				godoc
+// @Summary 			Log users in
+// @Description 	Login and set token in header
+// @Param 				json body adapters.TUserLoginRequest true "user"
+// @Accept 				application/json
+// @Produce 			application/json
+// @Tags 					journey
+// @Success 			200 {object} adapters.TSuccessResponse
+// @Failure 			400 {object} ierrors.TError
+// @Router 				/login  [post]
 func (uc *tUserController) Login(c *gin.Context) {
 	logger.NewInfoLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["INIT"]["LOGIN"])
 
