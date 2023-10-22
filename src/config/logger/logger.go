@@ -28,6 +28,11 @@ func newLog(logInfo *TLogger) {
 	log.SetPrefix(prefix[logInfo.Prefix])
 
 	info := fmt.Sprintf("%s - %s", logInfo.Journey, logInfo.Message)
+
+	if env := os.Getenv("ENV"); env == "production" {
+		fmt.Println(info)
+	}
+
 	log.Println(info)
 }
 
