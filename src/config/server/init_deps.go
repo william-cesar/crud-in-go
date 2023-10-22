@@ -11,7 +11,7 @@ import (
 )
 
 func InitDocsDependencies() {
-	host, version := os.Getenv("BASE_URL"), os.Getenv("ENTRYPOINT")
+	host, version := os.Getenv("PORT"), os.Getenv("ENTRYPOINT")
 	docs.SwaggerInfo.Host = host
 	docs.SwaggerInfo.BasePath = "/" + version
 	docs.SwaggerInfo.Title = "Users API"
