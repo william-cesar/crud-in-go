@@ -21,10 +21,10 @@ func NewMongoDBConnection(ctx context.Context) (*mongo.Database, error) {
 		return nil, err
 	}
 
-	if err := client.Ping(ctx, nil); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_PING"])
-		return nil, err
-	}
+	// if err := client.Ping(ctx, nil); err != nil {
+	// 	logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_PING"])
+	// 	return nil, err
+	// }
 
 	logger.NewInfoLog(logger.JOURNEY["DB"], logger.MESSAGE["OK"]["DB_CONN"])
 
