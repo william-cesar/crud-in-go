@@ -2,6 +2,7 @@ package server
 
 import (
 	"os"
+	"strings"
 
 	docs "github.com/william-cesar/crud-in-go/docs"
 	uc "github.com/william-cesar/crud-in-go/src/controller"
@@ -11,7 +12,8 @@ import (
 )
 
 func InitDocsDependencies() {
-	host, version := os.Getenv("PORT"), os.Getenv("ENTRYPOINT")
+	host, version := os.Getenv("BASE_URL"), os.Getenv("ENTRYPOINT")
+	host = strings.Split(host, "//")[1]
 	docs.SwaggerInfo.Host = host
 	docs.SwaggerInfo.BasePath = "/" + version
 	docs.SwaggerInfo.Title = "Users API"
