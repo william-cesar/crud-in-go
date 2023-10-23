@@ -17,7 +17,7 @@ func (ur *tUserRepository) DeleteUser(id string) *ierrors.TError {
 	userId, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		return ierrors.NewBadRequestError()
 	}
 
@@ -26,12 +26,12 @@ func (ur *tUserRepository) DeleteUser(id string) *ierrors.TError {
 	res, err := collection.DeleteOne(context.Background(), filter)
 
 	if res.DeletedCount == 0 {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return ierrors.NewNotFoundError()
 	}
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["DELETION"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_REPOSITORY"], logger.MESSAGE["ERROR"]["DELETION"], err)
 		return ierrors.NewInternalError()
 	}
 

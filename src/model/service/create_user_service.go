@@ -14,12 +14,12 @@ func (us *tUserService) CreateUserService(
 	user, err := us.repository.FindUserByEmail(newUser.GetEmail())
 
 	if err != nil && err.StatusCode != 404 {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return nil, err
 	}
 
 	if user != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["UNIQUE"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["UNIQUE"], nil)
 		return nil, ierrors.NewBadRequestError("User already exists.")
 	}
 
@@ -27,7 +27,7 @@ func (us *tUserService) CreateUserService(
 	savedUser, err := us.repository.CreateUser(newUser)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["CREATION"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["CREATION"], err)
 		return nil, err
 	}
 
@@ -35,8 +35,8 @@ func (us *tUserService) CreateUserService(
 		savedUser.GetEmail(),
 		savedUser.GetId(),
 	); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
-		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["CREATION"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"], err)
+		logger.NewErrorLog(logger.JOURNEY["CREATE_SERVICE"], logger.MESSAGE["ERROR"]["CREATION"], err)
 
 		if dErr := us.repository.DeleteUser(savedUser.GetId()); dErr != nil {
 			return nil, dErr

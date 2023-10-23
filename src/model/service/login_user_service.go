@@ -12,7 +12,7 @@ func (us *tUserService) LoginUserService(user domain.IUser) (string, *ierrors.TE
 	user.EncryptPassword()
 
 	if err := us.findUserByEmailAndPassword(user); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["LOGIN_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["LOGIN_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return "", err
 	}
 

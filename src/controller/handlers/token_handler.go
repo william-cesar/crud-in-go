@@ -25,21 +25,21 @@ func VerifyToken(tk string) *ierrors.TError {
 
 	token, err := jwt.Parse(trimmedToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_SIGNATURE"])
+			logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_SIGNATURE"], nil)
 			return nil, ierrors.NewBadRequestError("Invalid token")
 		}
 		return []byte(secret), nil
 	})
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_VERIFY"])
+		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_VERIFY"], err)
 		return ierrors.NewUnauthorizedError()
 	}
 
 	_, ok := token.Claims.(jwt.MapClaims)
 
 	if !ok || !token.Valid {
-		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_VALIDITY"])
+		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_VALIDITY"], nil)
 		return ierrors.NewUnauthorizedError()
 	}
 

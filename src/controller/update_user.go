@@ -31,7 +31,7 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	var uReq adapters.TUserUpdateRequest
 
 	if err := c.ShouldBindJSON(&uReq); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"])
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"], err)
 		reqErr := validations.ValidateUserError(err)
 		c.JSON(reqErr.StatusCode, reqErr)
 		return
@@ -40,7 +40,7 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
-		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
@@ -49,7 +49,7 @@ func (uc *tUserController) UpdateUser(c *gin.Context) {
 	user := domain.NewUserUpdate(uReq.Password, uReq.Name, uReq.Age)
 
 	if err := uc.service.UpdateUserService(id, user); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["UPDATE"])
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_CONTROLLER"], logger.MESSAGE["ERROR"]["UPDATE"], err)
 		c.JSON(err.StatusCode, err)
 		return
 	}

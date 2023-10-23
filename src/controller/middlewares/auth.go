@@ -13,7 +13,7 @@ func Auth(c *gin.Context) {
 	token := c.GetHeader("Authorization")
 
 	if token == "" {
-		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["NO_TOKEN"])
+		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["NO_TOKEN"], nil)
 		err := ierrors.NewUnauthorizedError()
 		c.AbortWithStatusJSON(err.StatusCode, err)
 	}
@@ -21,7 +21,7 @@ func Auth(c *gin.Context) {
 	err := handlers.VerifyToken(token)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["INVALID_TOKEN"])
+		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["INVALID_TOKEN"], err)
 		c.AbortWithStatusJSON(err.StatusCode, err)
 	}
 

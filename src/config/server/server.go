@@ -15,7 +15,7 @@ func Init() {
 	logger.NewInfoLog(logger.JOURNEY["SERVER"], logger.MESSAGE["INIT"]["SERVER"])
 
 	if err := godotenv.Load(); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["LOAD_ENV"])
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["LOAD_ENV"], err)
 		os.Exit(1)
 	}
 
@@ -28,7 +28,7 @@ func Init() {
 	dbconn, err := mongodb.NewMongoDBConnection(context.Background())
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["DB_CONN"])
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["DB_CONN"], err)
 		os.Exit(1)
 	}
 
@@ -38,7 +38,7 @@ func Init() {
 	routes.InitRoutes(&router.RouterGroup, uc)
 
 	if err := router.Run(url); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["SERVER"])
+		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["SERVER"], err)
 		os.Exit(1)
 	}
 }

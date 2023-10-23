@@ -26,7 +26,7 @@ func (uc *tUserController) CreateUser(c *gin.Context) {
 	var userRequest adapters.TUserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_REQ"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_REQ"], err)
 		reqErr := validations.ValidateUserError(err)
 		c.JSON(reqErr.StatusCode, reqErr)
 		return
@@ -44,7 +44,7 @@ func (uc *tUserController) CreateUser(c *gin.Context) {
 	res, err := uc.service.CreateUserService(newUser)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["ERROR"]["CREATION"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_CONTROLLER"], logger.MESSAGE["ERROR"]["CREATION"], err)
 		c.JSON(err.StatusCode, err)
 		return
 	}

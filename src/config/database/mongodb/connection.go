@@ -17,12 +17,12 @@ func NewMongoDBConnection(ctx context.Context) (*mongo.Database, error) {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(conn))
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_CONN"])
+		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_CONN"], err)
 		return nil, err
 	}
 
 	if err := client.Ping(ctx, nil); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_PING"])
+		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_PING"], err)
 		return nil, err
 	}
 

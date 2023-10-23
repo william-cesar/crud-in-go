@@ -28,6 +28,9 @@ func newLog(logInfo *TLogger) {
 	log.SetPrefix(prefix[logInfo.Prefix])
 
 	info := fmt.Sprintf("%s - %s", logInfo.Journey, logInfo.Message)
+	if logInfo.Error != nil {
+		info = fmt.Sprintf("%s - %s - %s", logInfo.Journey, logInfo.Message, logInfo.Error.Error())
+	}
 
 	if env := os.Getenv("ENV"); env == "production" {
 		fmt.Println(info)
@@ -44,7 +47,7 @@ func NewInfoLog(journey, message string) {
 	})
 }
 
-func NewErrorLog(journey, message string) {
+func NewErrorLog(journey, message string, err error) {
 	message = fmt.Sprintf("%s - %s", message, logCaller())
 
 	newLog(&TLogger{

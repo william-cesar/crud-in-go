@@ -11,7 +11,7 @@ func (us *tUserService) DeleteUserService(id string) *ierrors.TError {
 	err := us.repository.DeleteUser(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_SERVICE"], logger.MESSAGE["ERROR"]["DELETION"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_SERVICE"], logger.MESSAGE["ERROR"]["DELETION"], err)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["DELETE_SERVICE"], logger.MESSAGE["OK"]["DELETED"])

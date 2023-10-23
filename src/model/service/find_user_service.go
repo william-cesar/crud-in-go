@@ -12,7 +12,7 @@ func (us *tUserService) FindUserByEmailService(email string) (domain.IUser, *ier
 	user, err := us.repository.FindUserByEmail(email)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return nil, err
 	}
 
@@ -26,7 +26,7 @@ func (us *tUserService) FindUserByIdService(id string) (domain.IUser, *ierrors.T
 	user, err := us.repository.FindUserById(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return nil, err
 	}
 
@@ -40,7 +40,7 @@ func (us *tUserService) findUserByEmailAndPassword(credentials domain.IUser) *ie
 	err := us.repository.FindUserByEmailAndPassword(credentials)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["FIND_SERVICE"], logger.MESSAGE["OK"]["FOUND"])

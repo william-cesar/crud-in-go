@@ -19,4 +19,5 @@ type TLogger struct {
 	Prefix  Options
 	Journey string
 	Message string
+	Error   error
 }

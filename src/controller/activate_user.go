@@ -26,14 +26,14 @@ func (uc *tUserController) ActivateUser(c *gin.Context) {
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
 	}
 
 	if err := uc.service.ActivateUserService(id); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["ACTIVATION"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_CONTROLLER"], logger.MESSAGE["ERROR"]["ACTIVATION"], err)
 		c.JSON(err.StatusCode, err)
 		return
 	}

@@ -26,7 +26,7 @@ func (uc *tUserController) Login(c *gin.Context) {
 	var userLogin adapters.TUserLoginRequest
 
 	if err := c.ShouldBindJSON(&userLogin); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"])
+		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"], err)
 		reqErr := validations.ValidateUserError(err)
 		c.JSON(reqErr.StatusCode, reqErr)
 		return
@@ -40,7 +40,7 @@ func (uc *tUserController) Login(c *gin.Context) {
 	token, err := uc.service.LoginUserService(credentials)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["TOKEN_VERIFY"])
+		logger.NewErrorLog(logger.JOURNEY["LOGIN_CONTROLLER"], logger.MESSAGE["ERROR"]["TOKEN_VERIFY"], err)
 		c.JSON(err.StatusCode, err)
 		return
 	}

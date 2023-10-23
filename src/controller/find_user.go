@@ -30,7 +30,7 @@ func (uc *tUserController) FindUserByEmail(c *gin.Context) {
 	body, err := io.ReadAll(c.Request.Body)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["REQ_BODY"], err)
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
@@ -39,7 +39,7 @@ func (uc *tUserController) FindUserByEmail(c *gin.Context) {
 	var u adapters.TUserEmailRequest
 
 	if err = json.Unmarshal(body, &u); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["UNMARSHAL"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["UNMARSHAL"], err)
 		e := ierrors.NewInternalError()
 		c.JSON(e.StatusCode, e)
 		return
@@ -48,7 +48,7 @@ func (uc *tUserController) FindUserByEmail(c *gin.Context) {
 	user, uErr := uc.service.FindUserByEmailService(u.Email)
 
 	if uErr != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		c.JSON(uErr.StatusCode, uErr)
 		return
 	}
@@ -73,17 +73,17 @@ func (uc *tUserController) FindUserById(c *gin.Context) {
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
-		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
 	}
 
-	user, uErr := uc.service.FindUserByIdService(id)
+	user, err := uc.service.FindUserByIdService(id)
 
-	if uErr != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["NO_USER"])
-		c.JSON(uErr.StatusCode, uErr)
+	if err != nil {
+		logger.NewErrorLog(logger.JOURNEY["FIND_CONTROLLER"], logger.MESSAGE["ERROR"]["NO_USER"], err)
+		c.JSON(err.StatusCode, err)
 		return
 	}
 

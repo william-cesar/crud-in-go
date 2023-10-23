@@ -27,14 +27,14 @@ func (uc *tUserController) DeleteUser(c *gin.Context) {
 	id := c.Param("id")
 
 	if _, err := primitive.ObjectIDFromHex(id); err != nil || strings.TrimSpace(id) == "" {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		e := ierrors.NewBadRequestError()
 		c.JSON(e.StatusCode, e)
 		return
 	}
 
 	if err := uc.service.DeleteUserService(id); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["ERROR"]["DELETION"])
+		logger.NewErrorLog(logger.JOURNEY["DELETE_CONTROLLER"], logger.MESSAGE["ERROR"]["DELETION"], err)
 		c.JSON(err.StatusCode, err)
 		return
 	}

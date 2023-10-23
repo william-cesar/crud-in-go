@@ -27,7 +27,7 @@ func (es *tEmailService) SendActivationEmail(email, subject, template string) *i
 	d := gomail.NewDialer(host, port, from, password)
 
 	if err := d.DialAndSend(m); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"], err)
 		return ierrors.NewInternalError()
 	}
 

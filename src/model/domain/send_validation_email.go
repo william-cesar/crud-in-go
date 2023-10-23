@@ -33,7 +33,7 @@ func (u *tUser) SendActivationEmail(email, id string) *ierrors.TError {
 	template := generateActivationMailTemplate(id)
 
 	if err := es.NewEmailService().SendActivationEmail(email, subject, template); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE"], logger.MESSAGE["ERROR"]["SEND_EMAIL"], err)
 		return err
 	}
 

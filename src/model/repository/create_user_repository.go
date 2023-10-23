@@ -20,7 +20,7 @@ func (ur *tUserRepository) CreateUser(d domain.IUser) (domain.IUser, *ierrors.TE
 	res, err := collection.InsertOne(context.Background(), dbEntity)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["CREATE_REPOSITORY"], logger.MESSAGE["ERROR"]["CREATION"])
+		logger.NewErrorLog(logger.JOURNEY["CREATE_REPOSITORY"], logger.MESSAGE["ERROR"]["CREATION"], err)
 		return nil, ierrors.NewInternalError(err.Error())
 	}
 

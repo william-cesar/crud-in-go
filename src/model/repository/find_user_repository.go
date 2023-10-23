@@ -26,7 +26,7 @@ func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors
 	err := collection.FindOne(context.Background(), filter).Decode(dbEntity)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 
 		if err == mongo.ErrNoDocuments {
 			return nil, ierrors.NewNotFoundError()
@@ -36,7 +36,7 @@ func (ur *tUserRepository) FindUserByEmail(email string) (domain.IUser, *ierrors
 	}
 
 	if !dbEntity.Active {
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVE"], err)
 		return nil, ierrors.NewBadRequestError(activateWarning)
 	}
 
@@ -54,7 +54,7 @@ func (ur *tUserRepository) FindUserById(id string) (domain.IUser, *ierrors.TErro
 	userId, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		return nil, ierrors.NewBadRequestError()
 	}
 
@@ -67,7 +67,7 @@ func (ur *tUserRepository) FindUserById(id string) (domain.IUser, *ierrors.TErro
 			return nil, ierrors.NewNotFoundError()
 		}
 
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return nil, ierrors.NewInternalError()
 	}
 
@@ -99,7 +99,7 @@ func (ur *tUserRepository) FindUserByEmailAndPassword(credentials domain.IUser) 
 			return ierrors.NewBadRequestError("Invalid credentials.")
 		}
 
-		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["FIND_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"], err)
 		return ierrors.NewInternalError()
 	}
 

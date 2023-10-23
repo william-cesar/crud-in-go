@@ -23,7 +23,7 @@ func (u *tUser) GenerateToken() (string, *ierrors.TError) {
 	tokenString, err := token.SignedString([]byte(secret))
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_GENERATION"])
+		logger.NewErrorLog(logger.JOURNEY["AUTH"], logger.MESSAGE["ERROR"]["TOKEN_GENERATION"], err)
 		return "", ierrors.NewInternalError()
 	}
 

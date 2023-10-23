@@ -17,7 +17,7 @@ func (ur *tUserRepository) ActivateUser(id string) *ierrors.TError {
 	userId, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		return ierrors.NewBadRequestError()
 	}
 
@@ -32,12 +32,12 @@ func (ur *tUserRepository) ActivateUser(id string) *ierrors.TError {
 			return ierrors.NewBadRequestError("User already activated.")
 		}
 
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["NO_USER"], nil)
 		return ierrors.NewNotFoundError()
 	}
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVATION"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_REPOSITORY"], logger.MESSAGE["ERROR"]["ACTIVATION"], err)
 		return ierrors.NewInternalError()
 	}
 

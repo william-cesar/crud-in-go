@@ -21,7 +21,7 @@ func (ur *tUserRepository) UpdateUser(id string, user domain.IUser) *ierrors.TEr
 	userId, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"])
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["INVALID_ID"], err)
 		return ierrors.NewBadRequestError()
 	}
 
@@ -29,7 +29,7 @@ func (ur *tUserRepository) UpdateUser(id string, user domain.IUser) *ierrors.TEr
 	fields := bson.D{{Key: "$set", Value: dbEntity}}
 
 	if _, err := collection.UpdateOne(context.Background(), filter, fields); err != nil {
-		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["UPDATE"])
+		logger.NewErrorLog(logger.JOURNEY["UPDATE_REPOSITORY"], logger.MESSAGE["ERROR"]["UPDATE"], err)
 		return ierrors.NewInternalError()
 	}
 

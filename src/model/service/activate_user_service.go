@@ -11,7 +11,7 @@ func (us *tUserService) ActivateUserService(id string) *ierrors.TError {
 	err := us.repository.ActivateUser(id)
 
 	if err != nil {
-		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["ERROR"]["ACTIVATION"])
+		logger.NewErrorLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["ERROR"]["ACTIVATION"], err)
 	}
 
 	logger.NewInfoLog(logger.JOURNEY["ACTIVATE_SERVICE"], logger.MESSAGE["OK"]["ACTIVE"])
