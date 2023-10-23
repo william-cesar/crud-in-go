@@ -54,6 +54,7 @@ func NewErrorLog(journey, message string, err error) {
 		Prefix:  ERROR,
 		Journey: journey,
 		Message: message,
+		Error:   err,
 	})
 }
 
