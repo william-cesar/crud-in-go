@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,14 +11,18 @@ import (
 	uc "github.com/william-cesar/crud-in-go/src/controller"
 )
 
-var baseUrl string
+func InitRoutes(r *gin.Engine, uc uc.IUserController) {
+	baseUrl := fmt.Sprintf("/%s", os.Getenv("ENTRYPOINT"))
 
-func InitRoutes(r *gin.RouterGroup, uc uc.IUserController) {
-	baseUrl = fmt.Sprintf("/%s", os.Getenv("ENTRYPOINT"))
+	journeyGroup := r.Group(baseUrl)
+	userGroup := r.Group(baseUrl + "/user")
 
 	// Swagger
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.NoRoute(func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/docs/index.html")
+	})
 
-	InitAuthRoutes(r, uc)
-	InitUserRoutes(r, uc)
+	InitAuthRoutes(journeyGroup, uc)
+	InitUserRoutes(userGroup, uc)
 }

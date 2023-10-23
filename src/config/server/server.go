@@ -35,7 +35,7 @@ func Init() {
 	uc := InitDependencies(dbconn)
 	InitDocsDependencies()
 
-	routes.InitRoutes(&router.RouterGroup, uc)
+	routes.InitRoutes(router, uc)
 
 	if err := router.Run(url); err != nil {
 		logger.NewErrorLog(logger.JOURNEY["SERVER"], logger.MESSAGE["ERROR"]["SERVER"], err)

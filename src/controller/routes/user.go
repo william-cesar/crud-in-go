@@ -7,8 +7,8 @@ import (
 )
 
 func InitUserRoutes(r *gin.RouterGroup, uc uc.IUserController) {
-	base := baseUrl + "/user"
-	userById := base + "/:id"
+	base := ""
+	userById := "/:id"
 
 	r.Use(m.Auth)
 
