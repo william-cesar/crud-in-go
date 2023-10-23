@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/william-cesar/crud-in-go/src/config/logger"
@@ -13,7 +14,7 @@ func NewMongoDBConnection(ctx context.Context) (*mongo.Database, error) {
 	logger.NewInfoLog(logger.JOURNEY["DB"], logger.MESSAGE["INIT"]["DB"])
 
 	conn, db := os.Getenv("DB_CONNECTION"), os.Getenv("DB_NAME")
-	print("conn", conn)
+
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(conn))
 
 	if err != nil {
@@ -23,6 +24,7 @@ func NewMongoDBConnection(ctx context.Context) (*mongo.Database, error) {
 
 	if err := client.Ping(ctx, nil); err != nil {
 		logger.NewErrorLog(logger.JOURNEY["DB"], logger.MESSAGE["ERROR"]["DB_PING"])
+		fmt.Println(err.Error())
 		return nil, err
 	}
 
